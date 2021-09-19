@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAPIQuiz</title>
+    <link rel="stylesheet" href="assets\style.css">
+</head>
+
+<body>
+
+    <h1>Coding Quiz Challenge</h1>
+    <a href="#" id="highScores">View high scores</a>
+
+    <!--Timer-->
+    <p>Time Remaining:
+        <span id="timer"></span>
+    </p>
+
+
+    <div id="startBox">
+        <p id="introBox">Click the "Start Quiz" button to start the quiz.</p>
+
+    <!--Start Button-->
+    <button id="startBtn">Start Quiz</button>
+        </div>
+    </div>
+    
+    <div id = "questionBox" class="hide">
+        <div id = "questions"></div>
+        <div id = "answers"></div>
+    </div>
+    
+
+    <script src="assets/script.js"></script>
+</body>
+
+</html>
+
+<!--GIVEN I am taking a code quiz
+//WHEN I click the start button
+//THEN a timer starts and I am presented with a question
+//WHEN I answer a question
+//THEN I am presented with another question
+//WHEN I answer a question incorrectly
+//THEN time is subtracted from the clock
+//WHEN all questions are answered or the timer reaches 0
+//THEN the game is over
+//WHEN the game is over
+//THEN I can save my initials and score-->
