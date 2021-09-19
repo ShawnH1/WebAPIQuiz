@@ -19,10 +19,10 @@ var currentIndex = 0;
 //button.setAttribute create, set, append, to changing innerHTML to answers
 //get data-blue is data-blue 
 //get the data attribute (like a class or id), addEventListeners that send over the data and then compare that to the correct answer
-for (let i = 0; i < array.length; i++) {
-    const element = array[i];
+//for (let i = 0; i < array.length; i++) {
+  //  const element = array[i];
     
-}
+//}
 var questionArray = [
  {
         question : 'What color is the sky?', 
@@ -68,7 +68,7 @@ function time() {
             clearInterval(timer)
         }
     }, 1000);
-    
+ setQuestions()   
 } //Use console logs like this to test every step along the way. console.log ("pay attention" , timer)
     
     //add to wrong/right answer tally
