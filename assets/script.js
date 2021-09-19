@@ -90,9 +90,13 @@ function setQuestions() {
     //answerCycleEl.textContent = questionArray[currentIndex].answers;
     //dynamically create button
 
+
     
  // get the element you want to add the button to
 var containerEl = document.getElementById("container");
+  containerEl.addEventListener("click", (e) => {
+    console.log(e.target.id)
+  })
 
 // create the button object and add the text to it
 var buttonOne = document.createElement("BUTTON");
@@ -101,20 +105,43 @@ buttonOne.innerHTML = questionArray[currentIndex].answers[0];
 
 // add the button to the div
 containerEl.appendChild(buttonOne);
+//unique ID for button one
+buttonOne.setAttribute("id", "firstBtn")
 
+//buttonTwo coode
 var buttonTwo = document.createElement("BUTTON");
 buttonTwo.innerHTML = questionArray[currentIndex].answers[1];
 containerEl.appendChild(buttonTwo);
+//unique ID for button 2
+buttonTwo.setAttribute("id", "secondBtn")
 
-
+//button 3 code
 var buttonThree = document.createElement("BUTTON");
 buttonThree.innerHTML = questionArray[currentIndex].answers[2];
 containerEl.appendChild(buttonThree);
+//unique ID for button 3
+buttonThree.setAttribute("id", "thirdBtn")
 
+//button 4 code 
 var buttonFour = document.createElement("BUTTON");
 buttonFour.innerHTML = questionArray[currentIndex].answers[3];
 containerEl.appendChild(buttonFour);
+//unique ID for button 3
+buttonFour.setAttribute("id", "fourthBtn")
+
+   // var containerEl = document.getElementById("container")
+    //containerEl.addEventListener("click", identify())
+    //function identify() {
+      //  if (buttonOne)
+        //console.log("buttonOne was clicked")}
 }
+
+//check if answer is right
+
+
+
+
+
 
 
 //end game condtion
