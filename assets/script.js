@@ -12,7 +12,8 @@ var answersEl = document.querySelector("#answers")
 var introEl = document.querySelector("#startBox")
 var currentIndex = 0;
 //This is an empty container to hold user input upon button click
-var userAnswer = [];
+var userAnswerOne = [];
+var correctanswers = 0;
 //set our array of object questions
 //var containerEl = document.querySelector("container")
 //use .question to pull first question and put in question div.
@@ -35,7 +36,7 @@ var questionArray = [
 
     {
         question: "Whats the dog's name?",
-        answers: ['red ', 'Charlie ', 'blue ', ' yellow'],
+        answers: ['red2 ', 'Charlie ', 'blue ', ' yellow'],
         correctanswer: 'Charlie ',
     },
     {
@@ -75,15 +76,31 @@ function time() {
 //add to wrong/right answer tally
 //when question is answered, remove it and replace it with a new one
 
+//ATTENTION ATTENTION ATTENTION!!!
+//This is to cycle the function again in case it's not pulling from the array automatically.
+//function(cycleQuestions){
+  //  for (let i = 0; i < questionArray.length; i++) {
+    //    const element = questionArray[i];
+        
+    //}
+//}
 
 function setQuestions() {
+
     //changed from removeChild to removeAttribute in parent because only the parent had the attribute of '"class = "hide"'
     quizEl.removeAttribute("class", "hide")
+
+    //for loop added to iterate
+    i = currentIndex
+    for (let i = 0; i < quizEl.length; i++) {
+        const element = quizEl[index];
+        
+    }
     //questionsEl.removeChild("class", "hide")
     //get question div
     questionCycleEl = questionsEl
     //set to first question (object) and cycle through with for(i > 0 
-    questionCycleEl.textContent = questionArray[currentIndex].question;
+    questionCycleEl.textContent = questionArray[i].question;
 
     //get answer div
     answerCycleEl = answersEl
@@ -91,50 +108,63 @@ function setQuestions() {
     //dynamically create button
 
 
+    // get the element you want to add the button to
+    var containerEl = document.getElementById("container");
+    containerEl.addEventListener("click", (e) => {
+        console.log(e.target.id)
+
+        userAnswerOne = (e.target.id)
+
+        console.log("userAnswerOne", userAnswerOne)
+        currentIndex++
+        console.log("currentIndex", currentIndex)
+    })
+
+
+    // create the button object and add the text to it
+    var buttonOne = document.createElement("BUTTON");
+    buttonOne.innerHTML = questionArray[currentIndex].answers[0];
+    //"Button";
+
+    // add the button to the div
+    containerEl.appendChild(buttonOne);
+    //unique ID for button one
+    buttonOne.setAttribute("id", "firstBtn")
+
+    //buttonTwo coode
+    var buttonTwo = document.createElement("BUTTON");
+    buttonTwo.innerHTML = questionArray[currentIndex].answers[1];
+    containerEl.appendChild(buttonTwo);
+    //unique ID for button 2
+    buttonTwo.setAttribute("id", "secondBtn")
+
+    //button 3 code
+    var buttonThree = document.createElement("BUTTON");
+    buttonThree.innerHTML = questionArray[currentIndex].answers[2];
+    containerEl.appendChild(buttonThree);
+    //unique ID for button 3
+    buttonThree.setAttribute("id", "thirdBtn")
+
+    //button 4 code 
+    var buttonFour = document.createElement("BUTTON");
+    buttonFour.innerHTML = questionArray[currentIndex].answers[3];
+    containerEl.appendChild(buttonFour);
+    //unique ID for button 4
+    buttonFour.setAttribute("id", "fourthBtn")
     
- // get the element you want to add the button to
-var containerEl = document.getElementById("container");
-  containerEl.addEventListener("click", (e) => {
-    console.log(e.target.id)
-  })
+    if (userAnswerOne = "secondBtn") {
+        console.log ("right answer!")
+    }
+}
+//push button click on button to userAnswer 1, 2, 3, 4, and 5
 
-// create the button object and add the text to it
-var buttonOne = document.createElement("BUTTON");
-buttonOne.innerHTML = questionArray[currentIndex].answers[0];
-//"Button";
-
-// add the button to the div
-containerEl.appendChild(buttonOne);
-//unique ID for button one
-buttonOne.setAttribute("id", "firstBtn")
-
-//buttonTwo coode
-var buttonTwo = document.createElement("BUTTON");
-buttonTwo.innerHTML = questionArray[currentIndex].answers[1];
-containerEl.appendChild(buttonTwo);
-//unique ID for button 2
-buttonTwo.setAttribute("id", "secondBtn")
-
-//button 3 code
-var buttonThree = document.createElement("BUTTON");
-buttonThree.innerHTML = questionArray[currentIndex].answers[2];
-containerEl.appendChild(buttonThree);
-//unique ID for button 3
-buttonThree.setAttribute("id", "thirdBtn")
-
-//button 4 code 
-var buttonFour = document.createElement("BUTTON");
-buttonFour.innerHTML = questionArray[currentIndex].answers[3];
-containerEl.appendChild(buttonFour);
-//unique ID for button 3
-buttonFour.setAttribute("id", "fourthBtn")
 
    // var containerEl = document.getElementById("container")
     //containerEl.addEventListener("click", identify())
     //function identify() {
       //  if (buttonOne)
         //console.log("buttonOne was clicked")}
-}
+
 
 //check if answer is right
 
