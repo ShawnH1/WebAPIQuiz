@@ -1,3 +1,11 @@
+//possible solution?
+//for (i = 0; i > quizEl; i++){
+// document.generate("button")
+//append.child ("id", [i])
+//
+//}
+// https://www.youtube.com/watch?v=Kn06785pkJg
+
 //get our timer element, set a timer for 60 seconds
 var timerEl = document.querySelector("#timer")
 var secondsLeft = 60
