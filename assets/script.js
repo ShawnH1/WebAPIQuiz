@@ -13,7 +13,7 @@ var secondsLeft = 60
 var start = document.querySelector("#startBtn")
 // get our questionbox
 var quizEl = document.querySelector("#questionBox")
-var questionsEl = document.querySelector("#questions")
+
 // get our answerbox
 var answersEl = document.querySelector("#answers")
 //get our startbox
@@ -23,6 +23,9 @@ var currentIndex = 0;
 var userAnswerOne = [];
 var correctanswers = 0;
 //set our array of object questions
+
+//highscores element
+var highScoresEl = document.querySelector("#highScores")
 //var containerEl = document.querySelector("container")
 //use .question to pull first question and put in question div.
 
@@ -44,21 +47,26 @@ var questionArray = [
 
     {
         question: "Whats the dog's name?",
-        answers: ['red2 ', 'Charlie ', 'blue ', ' yellow'],
+        answers: ['red2 ', 'Charlie ', 'blue2 ', ' yellow2'],
         correctanswer: 'Charlie ',
     },
     {
         question: 'What color are bananas?',
-        answers: ['red ', 'green ', 'blue ', 'yellow'],
-        correctanswer: 'yellow',
+        answers: ['red3 ', 'green3 ', 'blue3 ', 'yellow3'],
+        correctanswer: 'yellow3',
     },
     {
         question: 'What color are apples?',
-        answers: ['red ', 'green ', 'blue ', 'yellow'],
-        correctanswer: 'red ',
+        answers: ['red4 ', 'green4 ', 'blue4 ', ' yellow4 '],
+        correctanswer: 'red4 ',
     }
 ]
 
+var random = ["red", "white", "blue"]
+for (let i = 0; i < random.length; i++) {
+    const element = random[i];
+    console.log("element",)
+}
 
 start.addEventListener("click", startQuiz)
 
@@ -69,6 +77,9 @@ function startQuiz() {
     quizEl.removeAttribute("class", "hide")
     //start timer
     time();
+    setQuestions(currentIndex)
+
+
 }
 function time() {
     var timer = setInterval(() => {
@@ -78,108 +89,104 @@ function time() {
             clearInterval(timer)
         }
     }, 1000);
-    setQuestions()
+
 } //Use console logs like this to test every step along the way. console.log ("pay attention" , timer)
 
 //add to wrong/right answer tally
 //when question is answered, remove it and replace it with a new one
 
-//ATTENTION ATTENTION ATTENTION!!!
-//This is to cycle the function again in case it's not pulling from the array automatically.
-//function(cycleQuestions){
-  //  for (let i = 0; i < questionArray.length; i++) {
-    //    const element = questionArray[i];
-        
-    //}
+//}
 //}
 
-function setQuestions() {
+highScoresEl.addEventListener("click", function() {
 
-    //changed from removeChild to removeAttribute in parent because only the parent had the attribute of '"class = "hide"'
-    quizEl.removeAttribute("class", "hide")
-
-    //for loop added to iterate
-    i = currentIndex
-    for (let i = 0; i < quizEl.length; i++) {
-        const element = quizEl[index];
-        
-    }
-    //questionsEl.removeChild("class", "hide")
-    //get question div
-    questionCycleEl = questionsEl
-    //set to first question (object) and cycle through with for(i > 0 
-    questionCycleEl.textContent = questionArray[i].question;
-
-    //get answer div
-    answerCycleEl = answersEl
-    //answerCycleEl.textContent = questionArray[currentIndex].answers;
-    //dynamically create button
-
-
-    // get the element you want to add the button to
-    var containerEl = document.getElementById("container");
-    containerEl.addEventListener("click", (e) => {
-        console.log(e.target.id)
-
-        userAnswerOne = (e.target.id)
-
-        console.log("userAnswerOne", userAnswerOne)
-        currentIndex++
-        console.log("currentIndex", currentIndex)
-    })
-
-
-    // create the button object and add the text to it
-    var buttonOne = document.createElement("BUTTON");
-    buttonOne.innerHTML = questionArray[currentIndex].answers[0];
-    //"Button";
-
-    // add the button to the div
-    containerEl.appendChild(buttonOne);
-    //unique ID for button one
-    buttonOne.setAttribute("id", "firstBtn")
-
-    //buttonTwo coode
-    var buttonTwo = document.createElement("BUTTON");
-    buttonTwo.innerHTML = questionArray[currentIndex].answers[1];
-    containerEl.appendChild(buttonTwo);
-    //unique ID for button 2
-    buttonTwo.setAttribute("id", "secondBtn")
-
-    //button 3 code
-    var buttonThree = document.createElement("BUTTON");
-    buttonThree.innerHTML = questionArray[currentIndex].answers[2];
-    containerEl.appendChild(buttonThree);
-    //unique ID for button 3
-    buttonThree.setAttribute("id", "thirdBtn")
-
-    //button 4 code 
-    var buttonFour = document.createElement("BUTTON");
-    buttonFour.innerHTML = questionArray[currentIndex].answers[3];
-    containerEl.appendChild(buttonFour);
-    //unique ID for button 4
-    buttonFour.setAttribute("id", "fourthBtn")
+  window.location.href = "highscores.html"
+})
     
-    if (userAnswerOne = "secondBtn") {
-        console.log ("right answer!")
+
+function setQuestions(question) {
+
+    var questionEl = document.querySelector("#questions")
+    //set to first question (object) and cycle through with for(i > 0 
+    var currentQuestion = questionArray[currentIndex].question;
+    questionEl.innerHTML = currentQuestion
+
+    for (let i = 0; i < questionArray[currentIndex].answers.length; i++) {
+        const element = questionArray[currentIndex].answers[i];
+
+        var answerBtnEl = document.createElement("button")
+            answerBtnEl.setAttribute("data-response", element)
+            answerBtnEl.textContent = element
+            
+            answerBtnEl.addEventListener("click", function(event) {
+                console.log(event)
+            console.log(event.target)
+
+                var currentAnswer = event.target.getAttribute("data-response")
+                console.log ("currentAnswer", currentAnswer)
+            
+                var correctBtn = questionArray[currentIndex].correctanswer
+                console.log("correct", correctBtn)
+
+                //If they click the correct answer...
+                if (currentAnswer === correctBtn) {
+
+                    //clears out the previous answers
+                    answersEl.innerHTML = ""
+
+                    //notifies the user that they got the correct answer by...
+                    //putting a notification in an "h3"
+                    var correct = document.createElement("h3")
+                    //this is the text that will pop up notifying them.
+                    correct.textContent = "You got question " + [currentIndex + 1] + " correct!  Great job!"
+                    //and putting it on the page in the "answers" element
+                    answersEl.appendChild(correct)
+
+                    //updates the count so that the next questions and corresponding answers will appear 
+                    //the next time this function is run.
+                    currentIndex++
+
+                    //repeats this function at the currentIndex, which was just changed.
+                    setQuestions(currentIndex)
+                
+                //if they clicked a wrong answer or something went wrong
+                } else {
+                    //clears out the previous answers
+                    answersEl.innerHTML = ""
+                    
+                    //notifies the user that they got the wrong answer by...
+                    //putting it in a "h3 tag"
+                    var incorrect = document.createElement("h3")
+                    //this is the text that will pop up notifying them.
+                    incorrect.textContent = "You got question " + [currentIndex + 1] + " wrong!  You can do this!"
+                    //this adds it to the page in the "answers" section
+                    answersEl.appendChild(incorrect)
+
+                    //updates the count that the next questions and corresponding answers will appear
+                    //the next time this function is run.
+                    currentIndex++
+
+                    //repeats this function at the currentIndex, which was just changed.
+                    setQuestions(currentIndex)
+
+
+                }
+                
+                //if they clicked the wrong answer...
+                if (currentAnswer !== correctBtn) {
+                    //10 seconds is taken off of the timer.
+                    secondsLeft = secondsLeft - 10
+                }
+
+                
+
+            })
+            answersEl.appendChild(answerBtnEl)
+        console.log("element2", answerBtnEl)
     }
+    
+    
 }
-//push button click on button to userAnswer 1, 2, 3, 4, and 5
-
-
-   // var containerEl = document.getElementById("container")
-    //containerEl.addEventListener("click", identify())
-    //function identify() {
-      //  if (buttonOne)
-        //console.log("buttonOne was clicked")}
-
-
-//check if answer is right
-
-
-
-
-
 
 
 //end game condtion
@@ -190,5 +197,5 @@ function setQuestions() {
 
  //ATTENTION ATTENTION ATTENTION
     //This is the link to switch over the high scores page.  Throw it in the end game function.
-    //window.location.href = "highscores.html"
+
 //create another HTML page with a button to try again
