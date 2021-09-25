@@ -1,11 +1,3 @@
-//possible solution?
-//for (i = 0; i > quizEl; i++){
-// document.generate("button")
-//append.child ("id", [i])
-//
-//}
-// https://www.youtube.com/watch?v=Kn06785pkJg
-
 //get our timer element, set a timer for 60 seconds
 var timerEl = document.querySelector("#timer")
 var secondsLeft = 60
@@ -18,9 +10,10 @@ var quizEl = document.querySelector("#questionBox")
 var answersEl = document.querySelector("#answers")
 //get our startbox
 var introEl = document.querySelector("#startBox")
+
+//used to select the next questions and answers when cycling through 
 var currentIndex = 0;
-//This is an empty container to hold user input upon button click
-var userAnswerOne = [];
+
 var correctanswers = 0;
 //set our array of object questions
 
@@ -38,59 +31,87 @@ var highScoresEl = document.querySelector("#highScores")
 //  const element = array[i];
 
 //}
+
+//this is the array of questions and answers
 var questionArray = [
     {
+        //this is the first question
         question: 'What color is the sky?',
+        //these are the possible answers for the first question
         answers: ['red ', 'green ', 'blue ', 'yellow '],
+        //this is the correct answer for the first question
         correctanswer: 'blue ',
     },
 
     {
+        //this is the second question
         question: "Whats the dog's name?",
+        //these are the possible answers for the second question 
         answers: ['red2 ', 'Charlie ', 'blue2 ', ' yellow2'],
+        //this is the correct answer for the second question
         correctanswer: 'Charlie ',
     },
+
     {
+        //this is the third question
         question: 'What color are bananas?',
+        //these are the possible answers for the third question
         answers: ['red3 ', 'green3 ', 'blue3 ', 'yellow3'],
+        //this is the correct answer for the third question
         correctanswer: 'yellow3',
     },
+
     {
+        //this is the fourth question
         question: 'What color are apples?',
+        //these are the possible answers for the fourth question
         answers: ['red4 ', 'green4 ', 'blue4 ', ' yellow4 '],
+        //this is the correct answer for the fourth question
         correctanswer: 'red4 ',
     }
 ]
 
-var random = ["red", "white", "blue"]
-for (let i = 0; i < random.length; i++) {
-    const element = random[i];
-    console.log("element",)
-}
+//used to test a concept for a better understanding
+//var random = ["red", "white", "blue"]
+//for (let i = 0; i < random.length; i++) {
+  //  const element = random[i];
+    //console.log("element",)
+//}
 
+//adds an event listener to the "Start quiz button" which activates the "startQuiz" function
 start.addEventListener("click", startQuiz)
 
+//This function starts the quiz.  That means...
 function startQuiz() {
-    //Remove old startBox
+    //The startBox with the instructions disappears
     introEl.setAttribute("class", "hide")
-    //add new questionBox
+    //The questionBox with the questions and answers appears
     quizEl.removeAttribute("class", "hide")
-    //start timer
+    //The timer function is started
     time();
+    //The setQuestions function is started at the currentIndex
     setQuestions(currentIndex)
-
-
 }
+
+//This function controls the number part of the timer 
 function time() {
+    //sets the number part of the timer to countdown at a certain interval
     var timer = setInterval(() => {
+        //this is the actual number part losing 1 number 
         secondsLeft--
+        //this displays the numbers on the page
         timerEl.innerHTML = secondsLeft
+        //if time runs out...
         if (secondsLeft <= 0) {
+            //this stops the countdown by clearing it instead of it going into the negative
             clearInterval(timer)
         }
+        //this sets the speed of the countdown so that a number is removed from the count every second.
     }, 1000);
 
-} //Use console logs like this to test every step along the way. console.log ("pay attention" , timer)
+}
+
+//Use console logs like this to test every step along the way. console.log ("pay attention" , timer)
 
 //add to wrong/right answer tally
 //when question is answered, remove it and replace it with a new one
@@ -98,34 +119,56 @@ function time() {
 //}
 //}
 
+//When the user clicks on "High Scores"
 highScoresEl.addEventListener("click", function() {
-
+    
+    //they are brought to the "High Scores" page
   window.location.href = "highscores.html"
 })
     
 
+//this is the function to display and cycle through the questions
 function setQuestions(question) {
 
+    //this targets the question element
     var questionEl = document.querySelector("#questions")
-    //set to first question (object) and cycle through with for(i > 0 
+    
+    //this sets the current question to the corresponding one in the array
     var currentQuestion = questionArray[currentIndex].question;
+
+    //this attaches it to the page in the "question" div
     questionEl.innerHTML = currentQuestion
 
+    //this cycles to the next question in the array every time that the function is run.
+    //Note: the function needs to be run again for this to work.  It does not automatically cycle to the next question.
+    //Above note was added because for loops can be a headache if one runs with the assumption that they work automatically
+    //without repeating the entire function itself over again.
     for (let i = 0; i < questionArray[currentIndex].answers.length; i++) {
         const element = questionArray[currentIndex].answers[i];
 
+        //this creates the buttons for the various answers
         var answerBtnEl = document.createElement("button")
+            //this assigns an attribute with the corresponding answer so they can be identified later
             answerBtnEl.setAttribute("data-response", element)
+            //this assigns the text inside the button to be the corresponding answer
             answerBtnEl.textContent = element
             
+            //When the user clicks on a answer button... 
             answerBtnEl.addEventListener("click", function(event) {
-                console.log(event)
-            console.log(event.target)
+                //Testing, to make sure that the event listener is working
+                //console.log(event)
+            //console.log(event.target)
 
+                //this tells the computer which button was clicked
                 var currentAnswer = event.target.getAttribute("data-response")
-                console.log ("currentAnswer", currentAnswer)
-            
+
+                //used for testing, to make sure that the computer knows which button was clicked
+                //console.log ("currentAnswer", currentAnswer)
+                
+                //this tells the function which button is the correct one.
                 var correctBtn = questionArray[currentIndex].correctanswer
+
+                //testing, to make sure that the computer knows when the user clicked the correct button
                 console.log("correct", correctBtn)
 
                 //If they click the correct answer...
@@ -181,8 +224,10 @@ function setQuestions(question) {
                 
 
             })
+            //this attaches the button elements
             answersEl.appendChild(answerBtnEl)
-        console.log("element2", answerBtnEl)
+            //testing, to make sure that 
+        //console.log("element2", answerBtnEl)
     }
     
     
@@ -194,8 +239,5 @@ function setQuestions(question) {
 
 //save high score to localStorage get/set
 //relocate
-
- //ATTENTION ATTENTION ATTENTION
-    //This is the link to switch over the high scores page.  Throw it in the end game function.
 
 //create another HTML page with a button to try again
