@@ -21,18 +21,42 @@
 
 
     <div id="startBox">
-        <p id="introBox">Click the "Start Quiz" button to start the quiz.</p>
+        <p id="introBox">
+            <!--Greet the -->
+            Click the "Start Quiz" button to start the quiz.
+            Note: Score is calculated by multiplying the number
+            of correct answers by the remaining time.
+        </p>
 
-    <!--Start Button-->
-    <button id="startBtn">Start Quiz</button>
-        </div>
+        <!--Start Button-->
+        <button id="startBtn">Start Quiz</button>
     </div>
-    
-    <div id = "questionBox" class="hide">
-        <div id = "questions"></div>
-        <div id = "answers"></div>
     </div>
-    
+
+    <!--holds the questions and answers, starts hidden.  Appears during quiz, disappears when quiz is complete/timer hits 0-->
+    <div id="questionBox" class="hide">
+        <!--This div holds the current question-->
+        <div id="questions"></div>
+        <!--This div holds the current answers-->
+        <div id="answers"></div>
+    </div>
+
+    <!--hidden div to hold the form for score submission.  Starts hidden and appears when quiz is complete/timer hits 0-->
+    <div id="highScoresForm" class="hide">
+        
+        <p>Please add your score to the scoreboard!</p>
+        <!--enterScore Form-->
+        <form id = "enterScore">
+            <div>
+                <input type="text" id="userInitials" placeholder="Initials">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+        
+        <!--A button to input the data from the above form
+        <button id = "userScoreBtn">Submit your score!</button>-->
+
+
 
     <script src="assets/script.js"></script>
 </body>

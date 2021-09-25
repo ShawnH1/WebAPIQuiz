@@ -14,12 +14,20 @@ var introEl = document.querySelector("#startBox")
 //used to select the next questions and answers when cycling through 
 var currentIndex = 0;
 
-var correctanswers = 0;
-//set our array of object questions
+//variable to keep track of how many answers the user got correct.
+var correctUserAnswers = 0;
+
+//calculates the user's final score by multiplying how many answers they got right by the time remaining
+var finalScoreEl = correctUserAnswers * secondsLeft
+
 
 //highscores element
 var highScoresEl = document.querySelector("#highScores")
-//var containerEl = document.querySelector("container")
+
+//holding space for user intitials
+var userInitEl = ("")
+
+
 //use .question to pull first question and put in question div.
 
 //use .answers pull from array set 0 to button 1 using a for loop, currentindex.length, create a button inside (only one as it repeats itself)
@@ -74,8 +82,8 @@ var questionArray = [
 //used to test a concept for a better understanding
 //var random = ["red", "white", "blue"]
 //for (let i = 0; i < random.length; i++) {
-  //  const element = random[i];
-    //console.log("element",)
+//  const element = random[i];
+//console.log("element",)
 //}
 
 //adds an event listener to the "Start quiz button" which activates the "startQuiz" function
@@ -105,6 +113,7 @@ function time() {
         if (secondsLeft <= 0) {
             //this stops the countdown by clearing it instead of it going into the negative
             clearInterval(timer)
+            endGame()
         }
         //this sets the speed of the countdown so that a number is removed from the count every second.
     }, 1000);
@@ -120,56 +129,66 @@ function time() {
 //}
 
 //When the user clicks on "High Scores"
-highScoresEl.addEventListener("click", function() {
-    
+
+//make the variables for highscores swap and highScoresForm more distinct
+highScoresEl.addEventListener("click", function () {
+
     //they are brought to the "High Scores" page
-  window.location.href = "highscores.html"
+    window.location.href = "highscores.html"
 })
-    
+
 
 //this is the function to display and cycle through the questions
 function setQuestions(question) {
 
     //this targets the question element
     var questionEl = document.querySelector("#questions")
-    
-    //this sets the current question to the corresponding one in the array
-    var currentQuestion = questionArray[currentIndex].question;
 
-    //this attaches it to the page in the "question" div
-    questionEl.innerHTML = currentQuestion
+    //if the user has cycled through all of the questions and answers,
+    if (currentIndex === 4) {
+        //console.log ("endgame")
+        //end the game
+        endGame()
+    } else {
+        //this sets the current question to the corresponding one in the array
+        var currentQuestion = questionArray[currentIndex].question;
 
-    //this cycles to the next question in the array every time that the function is run.
-    //Note: the function needs to be run again for this to work.  It does not automatically cycle to the next question.
-    //Above note was added because for loops can be a headache if one runs with the assumption that they work automatically
-    //without repeating the entire function itself over again.
-    for (let i = 0; i < questionArray[currentIndex].answers.length; i++) {
-        const element = questionArray[currentIndex].answers[i];
+        //this attaches it to the page in the "question" div
+        questionEl.innerHTML = currentQuestion
 
-        //this creates the buttons for the various answers
-        var answerBtnEl = document.createElement("button")
+
+        //this cycles to the next question in the array every time that the function is run.
+        //Note: the function needs to be run again for this to work.  It does not automatically cycle to the next question.
+        //Above note was added because for loops can be a headache if one runs with the assumption that they work automatically
+        //without repeating the entire function itself over again.
+
+        for (let i = 0; i < questionArray[currentIndex].answers.length; i++) {
+            const element = questionArray[currentIndex].answers[i];
+
+            //this creates the buttons for the various answers
+            var answerBtnEl = document.createElement("button")
             //this assigns an attribute with the corresponding answer so they can be identified later
             answerBtnEl.setAttribute("data-response", element)
             //this assigns the text inside the button to be the corresponding answer
             answerBtnEl.textContent = element
-            
             //When the user clicks on a answer button... 
-            answerBtnEl.addEventListener("click", function(event) {
+            answerBtnEl.addEventListener("click", function (event) {
                 //Testing, to make sure that the event listener is working
                 //console.log(event)
-            //console.log(event.target)
+                //console.log(event.target)
 
                 //this tells the computer which button was clicked
                 var currentAnswer = event.target.getAttribute("data-response")
 
                 //used for testing, to make sure that the computer knows which button was clicked
                 //console.log ("currentAnswer", currentAnswer)
-                
+
                 //this tells the function which button is the correct one.
                 var correctBtn = questionArray[currentIndex].correctanswer
 
                 //testing, to make sure that the computer knows when the user clicked the correct button
                 console.log("correct", correctBtn)
+
 
                 //If they click the correct answer...
                 if (currentAnswer === correctBtn) {
@@ -189,14 +208,17 @@ function setQuestions(question) {
                     //the next time this function is run.
                     currentIndex++
 
+                    //updates the user's score
+                    correctUserAnswers++
+                    console.log("correct answers" + correctUserAnswers)
                     //repeats this function at the currentIndex, which was just changed.
                     setQuestions(currentIndex)
-                
-                //if they clicked a wrong answer or something went wrong
+
+                    //if they clicked a wrong answer or something went wrong
                 } else {
                     //clears out the previous answers
                     answersEl.innerHTML = ""
-                    
+
                     //notifies the user that they got the wrong answer by...
                     //putting it in a "h3 tag"
                     var incorrect = document.createElement("h3")
@@ -214,30 +236,64 @@ function setQuestions(question) {
 
 
                 }
-                
+
                 //if they clicked the wrong answer...
                 if (currentAnswer !== correctBtn) {
                     //10 seconds is taken off of the timer.
                     secondsLeft = secondsLeft - 10
                 }
 
-                
 
             })
             //this attaches the button elements
             answersEl.appendChild(answerBtnEl)
             //testing, to make sure that 
-        //console.log("element2", answerBtnEl)
+            //console.log("element2", answerBtnEl)
+        }
+
     }
-    
-    
 }
 
 
 //end game condtion
+function endGame() {
 
+    //Used to test that end game is being re
+    console.log("end game function entered")
+    //hides quizEl since they are no longer taking the quiz
+    quizEl.setAttribute("class", "hide")
+    saveScore()
+};
 
-//save high score to localStorage get/set
-//relocate
+function saveScore() {
+    console.log ("save score function entered")
+    finalScoreEl = correctUserAnswers * secondsLeft
+    console.log("final score", finalScoreEl)
+//
+var highScoresFormEl = document.querySelector("#highScoresForm")
+var userInitialsEl = document.querySelector("#userInitials")
 
-//create another HTML page with a button to try again
+//shows the High Score Form so they can add in their initials to their score
+highScoresFormEl.removeAttribute("class", "hide")
+    var enterScoreEl = document.querySelector("#enterScore")
+    enterScoreEl.addEventListener('submit', function(){
+        //submit event detected
+        userInitEl = userInitialsEl.value 
+        console.log("userInitialsEl" + userInitEl)
+        console.log("form button clicked")
+        saveLocalStorage()
+    })
+}
+
+function saveLocalStorage(){
+
+    console.log("entered save local storage function")
+    localStorage.setItem('final score', finalScoreEl)
+    localStorage.setItem ('userinitials', userInitEl);
+}
+
+//create another HTML page showing the high scores in a table
+//arrange high scores from highest to lowest
+//provide a button to try again send back to index.html with window.location.href = "index.html"
+//provide a button to clear localStorage localStorage.clear();
+//add CSS to make both pages pretty
