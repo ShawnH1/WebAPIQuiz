@@ -10,27 +10,37 @@
 </head>
 
 <body>
-
+    <!--Title-->
     <h1>Coding Quiz Challenge</h1>
-    <a href="#" id="highScores">View high scores</a>
+    <!--High Scores/link to High Scores page-->
+    <a href="#" id="highScores">View high scores.  Click me to see High Scores after completing the quiz!</a>
 
     <!--Timer-->
     <p>Time Remaining:
         <span id="timer"></span>
     </p>
 
-
+    <!--Intro Box which disappears when the Start button is clicked.-->
     <div id="startBox">
         <p id="introBox">
-            <!--Greet the -->
-            Click the "Start Quiz" button to start the quiz.
-            Note: Score is calculated by multiplying the number
-            of correct answers by the remaining time.
+            <!--Greet the user and teach them how to use the app.-->
+            Hello and welcome to this Javascript Coding Quiz.  When you click the "Start Quiz" button below, some questions will appear.
+            Simply click on the correct answer.  
+            <!--Teach them the rules and time limit-->
+            There is a 10 second penalty for each wrong answer.  If time runs out, the quiz will end
+            automatically.
+            <br>
+            <!--Notify them of upcoming features-->
+            <br>
+            Coming soon:
+            Score will be calculated by multiplying the number
+            of correct answers by the remaining time, more questions, additional styling, sound effects, and visual feedback!
+            <br>
+            Thank you for your patience and have a nice day!
         </p>
 
         <!--Start Button-->
         <button id="startBtn">Start Quiz</button>
-    </div>
     </div>
 
     <!--holds the questions and answers, starts hidden.  Appears during quiz, disappears when quiz is complete/timer hits 0-->
@@ -43,22 +53,17 @@
 
     <!--hidden div to hold the form for score submission.  Starts hidden and appears when quiz is complete/timer hits 0-->
     <div id="highScoresForm" class="hide">
-        
-        <p>Please add your score to the scoreboard!</p>
+
+        <p>Please add your score to the scoreboard and then click "View High Scores" to see it!</p>
         <!--enterScore Form-->
-        <form id = "enterScore">
+        <form id="enterScore">
             <div>
                 <input type="text" id="userInitials" placeholder="Initials">
                 <input type="submit" value="Submit">
             </div>
         </form>
-        
-        <!--A button to input the data from the above form
-        <button id = "userScoreBtn">Submit your score!</button>-->
 
-
-
-    <script src="assets/script.js"></script>
+        <script src="assets/script.js"></script>
 </body>
 
 </html>

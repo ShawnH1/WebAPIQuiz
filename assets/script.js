@@ -1,8 +1,12 @@
 //get our timer element, set a timer for 60 seconds
 var timerEl = document.querySelector("#timer")
+
+//set the starting time limit
 var secondsLeft = 60
+
 //get our start button
-var start = document.querySelector("#startBtn")
+var startBtnEl = document.querySelector("#startBtn")
+
 // get our questionbox
 var quizEl = document.querySelector("#questionBox")
 
@@ -20,25 +24,11 @@ var correctUserAnswers = 0;
 //calculates the user's final score by multiplying how many answers they got right by the time remaining
 var finalScoreEl = correctUserAnswers * secondsLeft
 
-
 //highscores element
 var highScoresEl = document.querySelector("#highScores")
 
 //holding space for user intitials
 var userInitEl = ("")
-
-
-//use .question to pull first question and put in question div.
-
-//use .answers pull from array set 0 to button 1 using a for loop, currentindex.length, create a button inside (only one as it repeats itself)
-//add attributes to "class" "buttons", button.setAttribute data- in HTML puts value on an element 
-//button.setAttribute create, set, append, to changing innerHTML to answers
-//get data-blue is data-blue 
-//get the data attribute (like a class or id), addEventListeners that send over the data and then compare that to the correct answer
-//for (let i = 0; i < array.length; i++) {
-//  const element = array[i];
-
-//}
 
 //this is the array of questions and answers
 var questionArray = [
@@ -79,15 +69,11 @@ var questionArray = [
     }
 ]
 
-//used to test a concept for a better understanding
-//var random = ["red", "white", "blue"]
-//for (let i = 0; i < random.length; i++) {
-//  const element = random[i];
-//console.log("element",)
-//}
-
 //adds an event listener to the "Start quiz button" which activates the "startQuiz" function
-start.addEventListener("click", startQuiz)
+startBtnEl.addEventListener("click", function () {
+    console.log('started')
+    startQuiz()
+})
 
 //This function starts the quiz.  That means...
 function startQuiz() {
@@ -128,11 +114,8 @@ function time() {
 //}
 //}
 
-//When the user clicks on "High Scores"
-
-//make the variables for highscores swap and highScoresForm more distinct
+//When the user clicks on "High Scores"...
 highScoresEl.addEventListener("click", function () {
-
     //they are brought to the "High Scores" page
     window.location.href = "highscores.html"
 })
@@ -262,38 +245,53 @@ function endGame() {
     console.log("end game function entered")
     //hides quizEl since they are no longer taking the quiz
     quizEl.setAttribute("class", "hide")
+    //stop timer or get time at that point
+
+    //get finalTime
+
+    //send to saveScore function
     saveScore()
 };
 
 function saveScore() {
-    console.log ("save score function entered")
-    finalScoreEl = correctUserAnswers * secondsLeft
+    console.log("save score function entered")
+    finalScoreEl = correctUserAnswers //* secondsLeft
     console.log("final score", finalScoreEl)
-//
-var highScoresFormEl = document.querySelector("#highScoresForm")
-var userInitialsEl = document.querySelector("#userInitials")
 
-//shows the High Score Form so they can add in their initials to their score
-highScoresFormEl.removeAttribute("class", "hide")
+    var highScoresFormEl = document.querySelector("#highScoresForm")
+    var userInitialsEl = document.querySelector("#userInitials")
+
+    //shows the High Score Form so they can add in their initials to their score
+    highScoresFormEl.removeAttribute("class", "hide")
     var enterScoreEl = document.querySelector("#enterScore")
-    enterScoreEl.addEventListener('submit', function(){
+    enterScoreEl.addEventListener('submit', function () {
         //submit event detected
-        userInitEl = userInitialsEl.value 
+        userInitEl = userInitialsEl.value
+
         console.log("userInitialsEl" + userInitEl)
         console.log("form button clicked")
         saveLocalStorage()
     })
 }
 
-function saveLocalStorage(){
+function saveLocalStorage() {
 
     console.log("entered save local storage function")
+    //save their final score to local storage
     localStorage.setItem('final score', finalScoreEl)
-    localStorage.setItem ('userinitials', userInitEl);
+    // //save thier initials to local storage
+    localStorage.setItem('userinitials', userInitEl)
+    //send the user to the High Score page
+    sendtoHS()
+}
+//when the user submits their score...
+function sendToHS() {
+    //they are brought to the "High Scores" page
+    window.location.href = "highscores.html"
 }
 
 //create another HTML page showing the high scores in a table
 //arrange high scores from highest to lowest
-//provide a button to try again send back to index.html with window.location.href = "index.html"
-//provide a button to clear localStorage localStorage.clear();
+//DONE - provide a button to try again on HS send back to index.html with window.location.href = "index.html"
+//DONE - provide a button to clear localStorage localStorage.clear();
 //add CSS to make both pages pretty
